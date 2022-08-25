@@ -1,0 +1,14 @@
+CREATE TABLE Products1 (
+id INT,
+name VARCHAR(50),
+purchaseDate VARCHAR(50),
+amount INT,
+city VARCHAR(50)
+);
+
+INSERT INTO Products1
+VALUES ('01','Bread','25-08-22','30','Dehradun');
+ SELECT     ('02','Butter','25-08-22','50','Haridwar'),
+      ('03','Jam','25-08-22','100','Delhi'),
+      ('04','Chocolate','25-08-22','150','Roorkee'),
+      ('05','Banana','25-08-22','40','Dehradun');
