@@ -12,3 +12,31 @@ VALUES ('01','Bread','25-08-22','30','Dehradun');
       ('03','Jam','25-08-22','100','Delhi'),
       ('04','Chocolate','25-08-22','150','Roorkee'),
       ('05','Banana','25-08-22','40','Dehradun');
+      
+      
+     
+ CREATE TABLE Products36 (
+id INT,
+name VARCHAR(50),
+purchaseDate VARCHAR(50),
+amount INT,
+city VARCHAR(50)
+);
+
+INSERT INTO Products36 VALUES
+      ('01','Bread','25-08-22','30','Dehradun');
+
+INSERT INTO Products36 VALUES
+      ('02','Butter','25-08-22','50','Haridwar');
+
+INSERT INTO Products36 VALUES
+      ('03','Jam','25-08-22','100','Delhi');
+
+INSERT INTO Products36 VALUES
+      ('04','Chocolate','25-08-22','150','Roorkee');
+
+INSERT INTO Products36 VALUES
+      ('05','Banana','25-08-22','40','Dehradun');
+
+SELECT name FROM Product36
+   WHERE city IN ('Dehradun', 'Roorkee', 'Delhi');
