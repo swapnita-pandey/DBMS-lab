@@ -21,6 +21,33 @@ VALUES ('18', 'Luv', '10-nov-2001', 'Mathura', '5846987546');
 INSERT INTO CUSTOMER
 VALUES ('19', 'Swp', '20-nov-2001', 'VNS', '1564896526');
 
+SELECT customer_id FROM CUSTOMER WHERE city = 'Dehradun';     // 16
+
+SELECT customer_name FROM CUSTOMER WHERE city = 'Dehradun' AND customer_id = '16';    // Jyoti
+
+SELECT customer_name FROM CUSTOMER WHERE city = 'Dehradun' OR customer_id = '18';   // Jyoti
+                                                                                    // Luv
+
+SELECT customer_name FROM CUSTOMER WHERE NOT city = 'Dehradun';     // Harshit
+                                                                    // Kush
+                                                                    // Luv
+                                                                    // Swp
+                                                                    
+SELECT customer_name FROM CUSTOMER WHERE city IN ('Dehradun', 'Delhi', 'Haridwar', 'Roorkee');    // Harshit
+                                                                                                  // Jyoti
+
+SELECT customer_name FROM CUSTOMER WHERE city NOT IN ('Dehradun', 'Delhi', 'Haridwar', 'Roorkee');    // Kush
+                                                                                                      // Luv
+                                                                                                      // Swp
+
+SELECT customer_name FROM CUSTOMER WHERE customer_id BETWEEN '12' AND '18';   // Harshit      output including 12 and 18
+                                                                              // Jyoti
+                                                                              // Kush
+                                                                              // Luv
+
+
+
+
 desc CUSTOMER
 
 SELECT *FROM CUSTOMER
