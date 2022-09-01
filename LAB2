@@ -44,6 +44,24 @@ SELECT customer_name FROM CUSTOMER WHERE customer_id BETWEEN '12' AND '18';   //
                                                                               // Jyoti
                                                                               // Kush
                                                                               // Luv
+                                                                              
+DELETE FROM CUSTOMER  WHERE customer_id = '14';
+
+UPDATE CUSTOMER
+SET city = 'Dehradun' WHERE customer_id = '16';
+
+UPDATE CUSTOMER
+SET city = 'Varanasi' WHERE city = 'VNS';
+
+SELECT MAX(customer_id) FROM CUSTOMER;     // 19
+
+SELECT MIN(customer_id) FROM CUSTOMER;    // 16
+
+SELECT AVG(customer_id) FROM CUSTOMER;    // 17.5
+
+SELECT COUNT(customer_id) FROM CUSTOMER;    // 4
+
+SELECT SUM(customer_id) FROM CUSTOMER;    // 70
 
 
 
