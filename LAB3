@@ -1,0 +1,75 @@
+CREATE TABLE MAANAGER(      //create table
+M_id INT,
+M_name VARCHAR(50),
+M_salary INT,
+M_dob date NOT NULL,
+city VARCHAR(20);
+);
+
+INSERT INTO MANAGER VALUES        //add tuples
+('14', 'Harshit', '30', '05-Oct-2001', 'Haldwani');
+INSERT INTO MANAGER VALUES
+('16', 'Jyoti', '15', '05-Oct-2001', 'Dehradun');
+INSERT INTO MANAGER VALUES
+('17', 'Kush', '40', '05-Oct-2001', 'Kashipur');
+INSERT INTO MANAGER VALUES
+('18', 'Luv', '10', '05-Oct-2001', 'Delhi');
+INSERT INTO MANAGER VALUES
+('19', 'Swp', '35', '05-Oct-2001', 'Varanasi');
+
+ALTER TABLE COMPANY_DETAILS
+ADD PRIMARY KEY (M_id);
+
+ALTER TABLE MANAGER ADD( designation VARCHAR(20));
+
+ALTER TABLE MANAGER MODIFY( city VARCHAR(30));    //Modify column datatype
+
+ALTER TABLE MANAGER MODIFY( city INT);    //Error: column to be modified must be empty to change datatype
+
+ALTER TABLE MANAGER DROP(designation);
+
+ALTER TABLE MANAGER RENAME COLUMN M_name TO E_name;
+
+RENAME MANAGER TO COMPANY_DETAILS;
+
+SELECT COUNT (M_name) FROM
+MANAGER GROUP BY (city);
+
+SELECT COUNT (M_name), city FROM
+MANAGER GROUP BY (city);
+
+INSERT INTO MANAGER VALUES
+('20', 'Ayush', '30', '14-Mar-2001', 'Dehradun');
+
+SELECT COUNT(M_name), city FROM MANAGER 
+GROUP BY(city) HAVING COUNT(M_name) > 1;
+
+SELECT city FROM MANAGER
+WHERE city LIKE 'D%';   //values of characters are case sensitive
+
+INSERT INTO MANAGER
+VALUES('23', 'Shruti', '35', '15-Oct-2001', 'dehradun');
+
+SELECT city FROM MANAGER
+WHERE city LIKE '_a%';
+
+SELECT city FROM MANAGER
+WHERE city LIKE '_____';
+
+SELECT city FROM MANAGER
+WHERE city LIKE '%i';
+
+SELECT city FROM MANAGER
+WHERE city LIKE '%a%';
+
+UPDATE MANAGER
+SET city = 'a' WHERE M_id = '23';
+
+SELECT city FROM MANAGER
+WHERE city LIKE '%a%';
+
+DELETE FROM MANAGER
+WHERE M_id = '23';
+
+DELETE FROM MANAGER
+WHERE M_id = '20';
