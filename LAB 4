@@ -1,0 +1,8 @@
+CREATE TABLE EMPLOYEE(
+EmpId INT,
+Ename VARCHAR(30),
+city VARCHAR(20),
+salary INT,
+DOB date
+);
+
