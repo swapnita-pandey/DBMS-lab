@@ -6,3 +6,43 @@ salary INT,
 DOB date
 );
 
+INSERT INTO EMPLOYEE VALUES
+('11', 'Yash', 'Delhi', '35', '19-Oct-2001');
+
+INSERT INTO EMPLOYEE VALUES
+('14', 'Harshit Bajeta', 'Delhi', '25', '24-Aug-2001');
+
+INSERT INTO EMPLOYEE VALUES
+('16', 'Jyoti Bhasin', 'Dehradun', '25', '28-Sep-2001');
+
+INSERT INTO EMPLOYEE VALUES
+('17', 'Kush Joshi', 'Kashipur', '35', '16-Oct-2001');
+
+INSERT INTO EMPLOYEE VALUES
+('18', 'Luv Bhushan', 'Dehradun', '20', '01-Apr-2001');
+
+SELECT AVG(salary) FROM EMPLOYEE;       // 27.1428571
+
+ALIAS
+SELECT AVG(salary) as Avg_Salary FROM EMPLOYEE;   // to give temporary name 
+
+CREATE VIEW XYZ AS
+SELECT Ename FROM EMPLOYEE;   //  insufficient privileges // user has not been given this priviledge
+                               //Oracle Live
+                               
+SELECT MAX(salary) FROM EMPLOYEE
+WHERE salary < (SELECT MAX(salary) FROM EMPLOYEE)
+
+SELECT Ename FROM XYZ WHERE Ename = 'Yash';
+
+SELECT Ename FROM EMPLOYEE WHERE Ename = 'Yash';
+
+SELECT *FROM XYZ;   // Ename column is displayed
+
+SELECT (salary-10) AS temp_Salary FROM EMPLOYEE;  // salary colum with reduction of 10
+
+CREATE VIEW ABC AS                            // To create view as salary-10   // If displayed will display salary-10
+SELECT (salary-10) AS ABC FROM EMPLOYEE;      // only for temporarily display // view not created
+
+SELECT *FROM ABC;   
+
