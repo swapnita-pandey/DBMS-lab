@@ -1,0 +1,106 @@
+CREATE TABLE EMPLOYEE(
+EmpId INT,
+Ename VARCHAR(30),
+age INT,
+salary INT,
+phoneNo INT,
+DOB date
+);
+
+ALTER TABLE EMPLOYEE
+ADD PRIMARY KEY (EmpId);
+
+INSERT INTO EMPLOYEE VALUES
+('11', 'Yash Gautam', '20', '35', '1235489654', '19-Oct-2001');
+
+INSERT INTO EMPLOYEE VALUES 
+('14', 'Harshit Bajeta', '20', '20', '4876791285', '26-Sep-2001');
+
+INSERT INTO EMPLOYEE VALUES 
+('16', 'Jyoti Bhasin', '20', '10', '5149772914', '30-Oct-2001');
+
+INSERT INTO EMPLOYEE VALUES 
+('17', 'Kush Joshi', '20', '35', '4617879717', '56-Feb-2001');        //Error till date becomes 28
+
+INSERT INTO EMPLOYEE VALUES 
+('18', 'Luv Bhushan', '20', '10', '7819729951', '22-Apr-2001')
+
+INSERT INTO EMPLOYEE VALUES 
+('17', 'Kush Joshi', '20', '35', '4617879717', '28-Feb-2001')
+
+SELECT AVG(salary) AS Avg_Salary FROM EMPLOYEE;       //22
+
+CREATE VIEW name AS
+SELECT Ename FROM EMPLOYEE;
+
+ALTER TABLE EMPLOYEE ADD( city VARCHAR(20));
+
+UPDATE EMPLOYEE
+SET city = 'ddn' WHERE EmpId = '14';
+
+UPDATE EMPLOYEE
+SET city = 'ddn' WHERE EmpId = '16';
+
+UPDATE EMPLOYEE
+SET city = 'Kashipur' WHERE EmpId = '17';
+
+UPDATE EMPLOYEE
+SET city = 'ddn' WHERE EmpId = '18';
+
+UPDATE EMPLOYEE
+SET city = 'Delhi' WHERE EmpId = '11';
+
+SELECT *FROM EMPLOYEE;
+
+SELECT DISTINCT(city) FROM EMPLOYEE;      //Delhi
+                                            ddn
+                                            Kashipur
+       
+       
+       
+       
+CREATE TABLE Emp1(
+Eid INT,
+Ename VARCHAR(50),
+city VARCHAR(20),
+salary INT, CHECK(salary > 10)
+);
+
+INSERT INTO Emp1 VALUES
+('14', 'Harshit', 'Haldwani', '15');
+
+INSERT INTO Emp1 VALUES
+('16', 'Jyoti', 'Dehradun', '10');  
+//  ERROR: check constraint (SQL_DCSHVQWDXNXMYEMBQOCELNYDN.SYS_C0097306939) violated ORA-06512: at "SYS.DBMS_SQL", line 1721
+
+ALTER TABLE EMPLOYEE DROP(age);
+
+SELECT *FROM EMPLOYEE;
+
+SELECT MONTHS_BETWEEN(SYSDATE, dob) AS age FROM EMPLOYEE;
+// 252.296148073476702508960573476702508961
+251.167115815412186379928315412186379928
+257.425180331541218637992831541218637993
+259.231631944444444444444444444444444444
+251.521954525089605734767025089605734767
+
+
+SELECT MONTHS_BETWEEN(SYSDATE, dob)/12 AS age FROM EMPLOYEE;
+
+ALTER TABLE EMPLOYEE ADD(age INT);
+
+SELECT *FROM EMPLOYEE;
+// Age column shows -
+
+UPDATE EMPLOYEE
+SET age = ROUND(MONTHS_BETWEEN(SYSDATE, dob)/12);
+
+//EMPID	ENAME	SALARY	PHONENO	DOB	CITY	AGE
+14	Harshit Bajeta	20	4876791285	26-SEP-01	ddn	21
+16	Jyoti Bhasin	10	5149772914	30-OCT-01	ddn	21
+18	Luv Bhushan	10	7819729951	22-APR-01	ddn	21
+17	Kush Joshi	35	4617879717	28-FEB-01	Kashipur	22
+11	Yash Gautam	35	1235489654	19-OCT-01	Delhi	21
+
+
+//We converted derived attribute into simple attribute by giving it physical existence
