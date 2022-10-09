@@ -1,9 +1,9 @@
-CREATE TABLE MAANAGER(      //create table
+CREATE TABLE MANAGER(      //create table
 M_id INT,
 M_name VARCHAR(50),
 M_salary INT,
 M_dob date NOT NULL,
-city VARCHAR(20);
+city VARCHAR(20)
 );
 
 INSERT INTO MANAGER VALUES        //add tuples
