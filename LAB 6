@@ -1,0 +1,33 @@
+CREATE TABLE CUSTOMER ( 
+customer_id INT PRIMARY KEY, 
+customer_name VARCHAR(50), 
+city VARCHAR(100), 
+amount INT, 
+dob DATE NOT NULL 
+);
+
+INSERT INTO CUSTOMER
+VALUES ('14', 'Harshit', 'Delhi', '200', '02-dec-2022');
+
+INSERT INTO CUSTOMER
+VALUES ('16', 'Jyoti', 'Dehradun', '500', '05-nov-2001');
+
+INSERT INTO CUSTOMER
+VALUES ('17', 'Kush', 'Kashipur', '600', '30-Oct-2001');
+
+INSERT INTO CUSTOMER
+VALUES ('18', 'Luv', 'Almora', '700', '22-Apr-2001');
+
+INSERT INTO CUSTOMER
+VALUES ('19', 'Swapnita', 'Varanasi', '800', '28-Feb-2001');
+
+SELECT customer_name FROM CUSTOMER
+WHERE customer_name LIKE 'S%' AND amount BETWEEN 100 AND 1000;
+
+ALTER TABLE CUSTOMER ADD age INT;
+
+UPDATE CUSTOMER SET age = MONTHS_BETWEEN(SYSDATE, dob)/12;
+
+SELECT MAX(age) FROM CUSTOMER WHERE age < (SELECT MAX(age) FROM CUSTOMER);
+
+
