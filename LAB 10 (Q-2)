@@ -89,6 +89,8 @@ SELECT sName FROM STUDENT WHERE DoB > '01-Jul-1996' ORDER BY(DoB);
 
 SELECT sID, eName, decision FROM APPLY WHERE decision = 'A';
 
+SELECT sID, eName FROM APPLY WHERE eName = 'Stanford';
+
 SELECT eName FROM COLLEGE WHERE enrollment > 10001;
 
 SELECT eName FROM COLLEGE WHERE NOT state = 'California';
