@@ -1,0 +1,51 @@
+SQL is used to perform CRUD operation:
+Create
+Read
+Update
+Delete
+
+IBM created SEQUEL: Structured English Query Language
+
+DDL (Data Definition Language): create, alter, rename, truncate & drop
+DQL (Data Query Language): select
+DML (Data Manipulation Language): insert, update & delete
+DCL (Data Control Language): grant & revoke permission to users
+TCL (Transaction Control Language): start transaction, commit, rollback
+
+columns -> structure/ schema
+row -> individual data
+
+Creating a databse
+1. CREATE DATABASE db_name;
+
+Deleting a databse
+2. DROP DATABASE db_name;
+
+To use a particular database
+3. USE db_name
+
+To create a table
+4.  CREATE TABLE table_name (
+    column_name1 datatype constraint,
+    column_name2 datatype constraint,
+    column_name3 datatype constraint
+    );
+
+To display all values
+SELECT * FROM table_name;
+
+For example,
+CREATE DATABASE college;
+
+USE college;
+
+CREATE TABLE student (
+id INT PRIMARY KEY,
+name VARCHAR (50),
+age INT NOT NULL
+);
+
+INSERT INTO student VALUES (1, "Swapnita", 22);
+INSERT INTO student VALUES (2, "NISHCHAL", 25);
+
+SELECT *FROM student;
