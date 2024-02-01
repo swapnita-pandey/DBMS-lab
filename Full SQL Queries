@@ -18,24 +18,44 @@ row -> individual data
 Creating a databse
 1. CREATE DATABASE db_name;
 
+2. CREATE DATABASE IF NOT EXISTS db_name;
+
 Deleting a databse
-2. DROP DATABASE db_name;
+3. DROP DATABASE db_name;
+
+4. DROP DATABASE IF EXISTS db_name;
 
 To use a particular database
-3. USE db_name
+5. USE db_name
 
 To create a table
-4.  CREATE TABLE table_name (
+6.  CREATE TABLE table_name (
     column_name1 datatype constraint,
     column_name2 datatype constraint,
     column_name3 datatype constraint
     );
 
-To display all values
-SELECT * FROM table_name;
+Insert values into table
+7.  INSERT INTO table_name
+    (colname1, colname2)
+    VALUES
+    (col1_v1, col2_v1),
+    (col1_v2, col2_v2);
+
+7. SHOW DATABASES;
+
+8. SHOW TABLES;
+
+To select and view all columns
+9. SELECT * FROM table_name;
+---------------------------------------------------------------------------------------------------
 
 For example,
 CREATE DATABASE college;
+
+CREATE DATABASE IF NOT EXISTS college;
+
+DROP DATABASE IF EXISTS company;
 
 USE college;
 
@@ -48,4 +68,247 @@ age INT NOT NULL
 INSERT INTO student VALUES (1, "Swapnita", 22);
 INSERT INTO student VALUES (2, "NISHCHAL", 25);
 
+INSERT INTO 
+(rollno, name)
+VALUES
+(101, "Karan"),
+(102, "Arjun");
+
 SELECT *FROM student;
+
+SHOW DATABASES;
+
+SHOW TABLES;
+------------------------------------------------------------------------------------------------
+
+Q.  Create a database for your company named XYZ.
+    Step 1: Create a table inside this DB to store employee info (id, name and salary).
+    Step 2: Add following information in the DB:
+        1, "adam", 25000
+        2. "bob", 30000
+        3. "casey", 40000
+    Step 3: Select & view all your table data.
+
+CREATE DATABASE xyz_company;
+USE xyz_company;
+
+CREATE TABLE employee(
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    salary INT
+);
+
+INSERT INTO employee
+(id, name, salary)
+VALUES
+(1, "adam", 25000),
+(2, "bob", 30000),
+(3, "casey", 40000);
+
+SELECT *FROM employee;
+---------------------------------------------------------------------------------------------
+
+CONSTRAINTS
+
+SQL contraints are used to specify rules for data in a table.
+
+NOT NULL: columns cannot have a null value
+10. col1 INT NOT NULL;
+
+UNIQUE: all values in column are different
+11. col2 INT UNIQUE
+
+PRIMARY KEY: makes a column unique & not null but used only for one
+12. id INT PRIMARY KEY
+
+13. CREATE TABLE temp (
+    id int NOT NULL,
+    PRIMARY KEY (id)
+    );
+-------------------------------------------------------------------------------------------------
+
+Example 1:
+CREATE TABLE student(
+rollno INT PRIMARY KEY,
+name VARCHAR(50)
+);
+
+SELECT *FROM student;
+
+CREATE TABLE temp1 (
+id INT UNIQUE
+);
+
+INSERT INTO temp1 VALUES(101);
+INSERT INTO temp1 VALUES(101);
+
+SELECT *FROM temp1;
+--------------------------------------------------------
+
+Example 2:
+CREATE TABLE temp1 (
+id INT,
+name VARCHAR(50),
+age INT,
+city VARCHAR(20),
+PRIMARY KEY (id)
+);
+--------------------------------------------------------
+
+Example 3:
+CREATE TABLE temp1 (
+id INT,
+name VARCHAR(50),
+age INT,
+city VARCHAR(20),
+PRIMARY KEY (id, name)
+);
+------------------------------------------------------------------------------------------------
+
+CONSTRAINTS continued.....
+
+FOREIGN KEY: prevent actions that would destroy links between tables
+14. CREATE TABLE temp (
+cust_id INT,
+FOREIGN KEY (cust_id) REFERENCES customer(id)
+);
+
+DEFAULT: sets the default value of a column
+15. salary INT DEFAULT 25000
+-------------------------------------------------------------------------------------------------
+
+CREATE TABLE emp (
+id INT,
+salary INT DEFAULT 25000);
+
+INSERT INTO emp(id) VALUES (101);
+
+SELECT *FROM emp;
+------------------------------------------------------------------------------------------------
+
+CONSTRAINTS continued......
+
+CHECK: It can limit the values allowed in a column
+16. CREATE TABLE city (
+    city VARCHAR(50),
+    age INT,
+    CONSTRAINT age_check CHECK (age >= 18 AND city = "Delhi")
+    );
+
+17. CREATE TABLE newTab (
+    age INT CHECK (age >= 18)
+    );
+---------------------------------------------------------------------------------------------------
+
+CREATE DATABASE college;
+USE college;
+
+CREATE TABLE student (
+rollno INT PRIMARY KEY,
+name VARCHAR(50),
+marks INT NOT NULL,
+grade VARCHAR(1),
+city VARCHAR(20)
+);
+
+INSERT INTO student
+(rollno, name, marks, grade, city)
+VALUES
+(101, "Anil", 78, "C", "Pune"),
+(102, "Bhumika", 93, "A", "Mumbai"),
+(103, "Chetan", 85, "B", "Mumbai"),
+(104, "Dhruv", 96, "A", "Delhi"),
+(105, "Emanuel", 12, "F", "Delhi"),
+(106, "Farah", 82, "B", "Delhi");
+------------------------------------------------------------------------------------------------
+
+SELECT: Used to select any data from the database
+18. SELECT col1, col2 FROM table_name;
+-------------------------------------------------------------------------------------------------
+
+SELECT name, marks FROM student;
+
+SELECT *FROM student;
+
+SELECT city FROM student;
+
+SELECT DISTINCT city FROM student;
+--------------------------------------------------------------------------------------------
+
+WHERE clause: To define some conditions
+19. SELECT col1, col2 FROM table_name
+    WHERE conditions;
+
+Using Operators in WHERE
+Arithmetic Operators: +(addition), -(subtraction), *(multiplication), /(division), %(modulus)
+Comparison Operators: =(equal to), !=(not equal to), >, >=, <, <=
+Logical Operators: AND, OR, NOT, IN, BETWEEN, ALL, LIKE, ANY
+Bitwise Operators: &(Bitwise AND), |(Bitwise OR)
+
+20. SELECT *FROM student WHERE marks = 93;
+
+21. SELECT *FROM student WHERE marks > 80;
+
+22. SELECT *FROM student WHERE city = "Mumbai";
+
+AND (to check for both conditions to be true)
+23. SELECT *FROM student
+    WHERE marks > 80 AND city = "Mumbai";
+
+OR (to check for one of the conditions to be true)
+24. SELECT *FROM student
+    WHERE marks > 80 OR city = "Mumbai";
+
+BETWEEN (selects for a range)
+25. SELECT *FROM student WHERE marks BETWEEN 80 AND 90;
+
+IN (matches any value in the list)
+26. SELECT *FROM student WHERE city IN ("Delhi", "Mumbai");
+
+NOT (to negate the given condition)
+27. SELECT *FROM student WHERE city NOT IN ("Delhi", "Mumbai", "Gurgaon");
+
+LIMIT Clause: Sets an upper limit on number of (tuples) rows to be returned
+28. SELECT col1, col2 FROM table_name
+    LIMIT number;
+Example 1: SELECT *FROM student LIMIT 3;
+Example 2: SELECT *FROM student 
+           WHERE marks > 75
+           LIMIT 3;
+
+ORDER By Clause: To sort in ascending (ASC) or descending order (DESC)
+29. SELECT col1, col2 FROM table_name
+    ORDER BY col_name(s) ASC;
+
+Example 1: SELECT *FROM student
+           ORDER BY city ASC;
+Example 2: SELECT *FROM student
+           ORDER BY marks DESC
+           LIMIT 3;
+
+Aggregate Functions: perform a calculation on a set of values, and return a single value.
+COUNT()
+30. SELECT COUNT(rollno)
+    FROM student;
+
+MAX()
+31. SELECT MAX(marks)
+    FROM student;
+
+MIN()
+
+SUM()
+
+AVG()
+SELECT AVG(marks)
+FROM student;
+
+Group By Cluase: Groups rows 
+---------------------------------------------------------------------------------------------
+
+
+
+
+---------------------------------------------------------------------------------------------
+
+
