@@ -295,20 +295,61 @@ MAX()
 31. SELECT MAX(marks)
     FROM student;
 
-MIN()
+32. MIN()
 
-SUM()
+33. SUM()
 
-AVG()
+34. AVG()
 SELECT AVG(marks)
 FROM student;
 
-Group By Cluase: Groups rows 
+Group By Cluase: Groups rows that have the same values into summary rows.
+                It collects data from multiple records and groups the result by one or more column.
+
+Generally we use group by with some aggregate function.
+
+To count the number of students in each city
+35. SELECT city, COUNT(name)
+    FROM student
+    GROUP BY city;
+
+Example 1: SELECT city, AVG(marks)
+           FROM student
+           GROUP BY city
+           ORDER BY city;
+
+Example 2: SELECT city, AVG(marks)
+           FROM student
+           GROUP BY city
+           ORDER BY avg(marks) DESC;
+
+HAVING CLAUSE: Similar to WHERE i.e. applies some condition on rows.
+                Used when we want to apply any condition after grouping.
+
+Count number of students in each city where max marks cross 90.
+36. SELECT COUNT(name), city
+    FROM student
+    GROUP BY city
+    HAVING MAX(marks) > 90;
 ---------------------------------------------------------------------------------------------
 
+General Order: SELECT column(s)
+               FROM table_name
+               WHERE condition
+               GROUP BY column(s)
+               HAVING condition
+               ORDER BY column(s) ASC;
 
+SELECT city, COUNT(rollno)
+FROM student
+GROUP BY city
+HAVING MAX(marks) > 90;
 
-
+SELECT city
+FROM student
+WHERE grade = "A"
+GROUP BY city
+HAVING MAX(marks) > 90;
 ---------------------------------------------------------------------------------------------
 
 
