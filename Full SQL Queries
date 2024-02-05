@@ -559,7 +559,22 @@ Union: It is used to combine the result-set of two or more SELECT statements.
        Gives UNIQUE records
 
 To use it:
-every SELECT 
+every SELECT should have same no. of columns
+columns must have similar data types
+columns in every SELECT should be in same order.
+
+52. SELECT column(s) FROM tableA
+    UNION
+    SELECT column(s) FROM tableB
+
+53. SELECT column(s) FROM tableA
+    UNION ALL
+    SELECT column(s) FROM tableB
+
+Example: SELECT name FROM employee
+         UNION
+         SELECT name FROM employee;
+
 ---------------------------------------------------------------------------------------
 
 CREATE TABLE student (
@@ -627,3 +642,90 @@ FROM employee as a
 JOIN employee as b
 ON a.id = b.manager_id;
 ----------------------------------------------------------------------------------------------
+
+Sub Query
+A Subquery or Inner query or a Nested query is a query within another SQL query.
+It involves 2 select statements.
+
+54. SELECT column(s)
+    FROM table_name
+    WHERE col_name operator
+    (subquery);
+
+3 ways:
+Using SELECT
+Using FROM
+Using WHERE
+------------------------------------------------------------------------------------
+
+Q. Get names of all students who scored more than class average.
+Step 1. Find the avg of class
+Step 2. Find the names of students with marks > avg
+
+CREATE TABLE student (
+rollno INT PRIMARY KEY,
+name VARCHAR(50),
+marks INT NOT NULL,
+grade VARCHAR(1),
+city VARCHAR(20)
+);
+
+INSERT INTO student
+(rollno, name, marks, grade, city)
+VALUES
+(101, "anil", 78, "C", "Pune"),
+(102, "bhumika", 93, "A", "Mumbai"),
+(103, "chetan", 85, "B", "Mumbai"),
+(104, "dhruv", 96, "A", "Delhi"),
+(105, "emanuel", 92, "F", "Delhi"),
+(106, "farah", 82, "B", "Delhi");
+
+SELECT *FROM student;
+
+SELECT AVG(marks)
+FROM student;
+
+SELECT rollno
+FROM student
+WHERE rollno % 2 = 0;
+
+55. Example with WHERE
+    SELECT name, marks
+    FROM student
+    WHERE marks > (SELECT AVG(marks) FROM student);
+
+SELECT name, rollno
+FROM student
+WHERE rollno IN (
+    SELECT rollno
+    FROM student
+    WHERE rollno % 2 = 0);
+----------------------------------------------------------------------------
+
+Example with FROM
+Q. Find the max marks from the students of Delhi
+Step 1. Find the students of Delhi
+Step 2. Find their max marks using the sublist in Step 1.
+
+56. SELECT MAX(marks) FROM (SELECT *FROM student WHERE city = "Delhi") AS temp;
+
+SELECT MAX(marks)
+FROM student
+WHERE city = "Mumbai";
+
+Example with SELECT
+57. SELECT (SELECT MAX(marks) FROM student), names FROM student;
+-----------------------------------------------------------------------------------------
+
+Views: A view is a virtual table based on the result-set of an SQL statement.
+       A view is a virtual table based on the result-set of an SQL statement.
+
+58. CREATE VIEW view1 AS
+    SELECT rollno, name, marks FROM student;
+
+    DROP VIEW view1;
+
+    SELECT *FROM view1;
+
+
+
