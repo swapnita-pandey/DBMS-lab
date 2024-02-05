@@ -333,6 +333,9 @@ Count number of students in each city where max marks cross 90.
     HAVING MAX(marks) > 90;
 ---------------------------------------------------------------------------------------------
 
+ASC for ascending order
+DESC for descending order
+
 General Order: SELECT column(s)
                FROM table_name
                WHERE condition
@@ -340,16 +343,287 @@ General Order: SELECT column(s)
                HAVING condition
                ORDER BY column(s) ASC;
 
-SELECT city, COUNT(rollno)
-FROM student
-GROUP BY city
-HAVING MAX(marks) > 90;
+Example 1: SELECT city, COUNT(rollno)
+           FROM student
+           GROUP BY city
+           HAVING MAX(marks) > 90;
 
-SELECT city
-FROM student
-WHERE grade = "A"
-GROUP BY city
-HAVING MAX(marks) > 90;
+Example 2: SELECT city
+           FROM student
+           WHERE grade = "A"
+           GROUP BY city
+           HAVING MAX(marks) > 90
+           ORDER BY ASC;
+
+UPDATE: to update existing rows
+37. UPDATE table_name
+SET col1 = val1, col2 = val2
+WHERE condition;
+
+UPDATE student
+SET grade = "B"
+WHERE marks > 80;
+
+38. SET SQL_SAFE_UPDATES = 0;
+
+DELETE: to delete existing rows
+39. DELETE FROM table_name
+    WHERE condition;
+
+DELETE FROM student
+WHERE marks < 33;
+
+
+FOREIGN KEY
+
+CREATE TABLE dept (
+id INT PRIMARY KEY,
+name VARCHAR (50)
+);
+
+CREATE TABLE teacher (
+id INT PRIMARY KEY,
+name VARCHAR (50),
+dept_id INT,
+FOREIGN KEY (dept_id) REFERENCES dept(id)
+);
+
+Cascading for FK
+On Delete Cascade: When we create a foreign key using this option, it deletes the referencing rows in the child table when the 
+                   referenced row is deleted in the parent table which has a primary key.
+On Update Cascade: When we create a foreign key using UPDATE CASCADE the referencing rows are updated in the child table when
+                    the referenced row is updated in the parent table which has a primary key.
+ ------------------------------------------------------------------------------------------
+
+40. CREATE TABLE student (
+    id INT PRIMARY KEY,
+    courseID INT,
+    FOREIGN KEY(courseID) REFERENCES course(id)
+    ON DELETE CASCADE
+    ON UPDATE CACADE
+    );
+
+INSERT INTO teacher
+VALUES
+(101, "Adam", 101),
+(102, "Eve", 102);
+
+DROP TABLE teacher;
+
+UPDATE dept
+SET id = 103
+WHERE id = 102;
 ---------------------------------------------------------------------------------------------
 
+ALTER: to change the schema
 
+ADD Column
+41. ALTER TABLE table_name
+    ADD COLUMN column_name datatype constraint;
+
+Example: ALTER TABLE student
+         ADD COLUMN age INT NOT NULL DEFAULT 19;
+
+DROP Column
+42. ALTER TABLE table_name
+    DROP COLUMN column_name;
+
+Example 1: ALTER TABLE student
+           DROP COLUMN stu_age;
+
+Example 2: ALTER TABLE student
+           ADD COLUMN age INT;
+
+Example 3: ALTER TABLE student
+           DROP COLUMN age;
+
+RENAME Table
+43. ALTER TABLE table_name
+    RENAME TO new_table_name;
+
+Example: ALTER TABLE student
+         MODIFY age VARCHAR(2);
+
+CHANGE Column (rename)
+44. ALTER TABLE table_name
+    CHANGE COLUMN old_name new_name new_datatype new_constraint;
+
+Example: ALTER TABLE student
+         CHANGE age stu_age INT;
+
+MODIFY Column (modify datatype/ constraint)
+45. ALTER TABLE table_name
+    MODIFY col_name new_datatype new_constraint;
+
+Example: ALTER TABLE student
+         MODIFY age VARCHAR(2);
+-----------------------------------------------------------------------------------------
+
+ALTER TABLE student
+MODIFY COLUMN age VARCHAR(2);
+
+INSERT INTO student
+(rollno, name, marks, age)
+VALUES
+(107, "gargi", 68, 100);
+--------------------------------------------------------------------------------------------
+
+Truncate: to delete table's data
+46. TRUNCATE TABLE table_name;
+
+UPDATE student
+SET grade = "0"
+WHERE grade = "A";
+--------------------------------------------------------------------------------------------
+
+Q. In the student table:
+a. Change the name of column "name" to "full_name".
+b. Delete all the students who scored marks less than 80.
+c. Delete the column for grades
+
+ALTER TABLE student
+CHANGE name full_name VARCHAR(50);
+
+DELETE FROM student
+WHERE marks < 80;
+
+ALTER TABLE student
+DROP column grade;
+-----------------------------------------------------------------------------------------
+
+Joins in SQL
+Joins is used to combine rows from two or more tables, based on a related column between them.
+
+Types of Joins
+
+Inner Join: Returns records that have matching values in both tables
+47. SELECT column(s)
+    FROM tableA
+    INNER JOIN tableB
+    ON tableA.col_name = tableB.col_name;
+
+Example: SELECT *FROM student
+         INNER JOIN course
+         ON student.student_id = course.student_id;
+
+
+Outer Join:
+
+Left Join: Returns all records from the left table, and the matched records from the right table.
+48. SELECT column(s)
+    FROM tableA
+    LEFT JOIN tableB
+    ON tableA.col_name = tableB.col_name;
+
+Right Join: Returns all records from the right table, and the matched records from the left table
+49. SELECT column(s)
+    FROM tableA
+    RIGHT JOIN tableB
+    ON tableA.col_name = tableB.col_name;
+
+Example: SELECT *FROM student as s
+         RIGHT JOIN course as c
+         ON s.student_id = c.student_id;
+
+Full Join: Returns all records when there is a match in either left or right table.
+
+LEFT JOIN
+UNION
+RIGHT JOIN
+
+50. SELECT *FROM student as a
+    LEFT JOIN course as b
+    ON a.id = b.id
+    UNION
+    SELECT *FROM student as a
+    RIGHT JOIN course as b
+    ON a.id = b.id;
+
+Example: SELECT *FROM student as a
+         LEFT JOIN course as b
+         ON a.id = b.id
+         WHERE b.id IS NULL;
+
+Self Join: It is a regular join but the table is joined with itself.
+51. SELECT column(s)
+    FROM table as a
+    JOIN table as b
+    ON a.col_name = b.col_name;
+
+Example: SELECT a.name as manager_name, b.name
+         FROM employee as a
+         JOIN employee as b
+         ON a.id = b.manager_id;
+
+Union: It is used to combine the result-set of two or more SELECT statements.
+       Gives UNIQUE records
+
+To use it:
+every SELECT 
+---------------------------------------------------------------------------------------
+
+CREATE TABLE student (
+id INT PRIMARY KEY,
+name VARCHAR(50)
+);
+
+INSERT INTO student (id, name)
+VALUES
+(101, "adam"),
+(102, "bob"),
+(103, "casey");
+
+CREATE TABLE course (
+id INT PRIMARY KEY,
+course VARCHAR(50)
+);
+
+INSERT INTO course (id, course)
+VALUES
+(102, "English"),
+(105, "Math"),
+(103, "Science"),
+(107, "Computer Science");
+
+SELECT *FROM student;
+SELECT *FROM course;
+
+SELECT *FROM student
+INNER JOIN course
+ON student.id = course.id;
+
+SELECT *FROM student as s
+INNER JOIN course as c
+ON s.id = c.id;
+---------------------------------------------------------------------------------------------
+
+CREATE TABLE employee (
+id INT PRIMARY KEY,
+name VARCHAR(50),
+manager_id INT
+);
+
+INSERT INTO employee (id, name, manager_id)
+VALUES
+(101, "adam", 103),
+(102, "bob", 104),
+(103, "casey", NULL),
+(104, "donald", 103);
+
+SELECT *FROM employee;
+
+SELECT *FROM student as a
+RIGHT JOIN course as b
+ON a.id = b.id
+WHERE a.id IS NULL;
+
+SELECT *
+FROM employee as a
+JOIN employee as b
+ON a.id = b.manager_id;
+
+SELECT a.name as manager_name, b.name
+FROM employee as a
+JOIN employee as b
+ON a.id = b.manager_id;
+----------------------------------------------------------------------------------------------
