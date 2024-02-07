@@ -68,11 +68,15 @@ age INT NOT NULL
 INSERT INTO student VALUES (1, "Swapnita", 22);
 INSERT INTO student VALUES (2, "NISHCHAL", 25);
 
-INSERT INTO 
+// To insert multiple values in the table
+INSERT INTO student
 (rollno, name)
 VALUES
 (101, "Karan"),
 (102, "Arjun");
+
+// To insert a single value
+INSERT INTO student VALUES (104, "Shyam");
 
 SELECT *FROM student;
 
@@ -107,6 +111,15 @@ VALUES
 
 SELECT *FROM employee;
 ---------------------------------------------------------------------------------------------
+KEYS
+
+Primary Key: It is a column (or a set of columns) in a table that uniquely identifies each row.
+(a unique id). There is only 1 PK & it should be NOT null.
+
+Foreign Key: A foreign key is a column (or set of columns) in a table that refers to the
+primary key of another table.
+There can be multiple FKs.
+FKs can have duplicate & null values.
 
 CONSTRAINTS
 
@@ -121,20 +134,14 @@ UNIQUE: all values in column are different
 PRIMARY KEY: makes a column unique & not null but used only for one
 12. id INT PRIMARY KEY
 
-13. CREATE TABLE temp (
-    id int NOT NULL,
-    PRIMARY KEY (id)
-    );
--------------------------------------------------------------------------------------------------
-
+---------------------------------------------------------------------------------------------
 Example 1:
-CREATE TABLE student(
-rollno INT PRIMARY KEY,
-name VARCHAR(50)
+CREATE TABLE temp (
+id int NOT NULL,
+PRIMARY KEY (id)
 );
 
-SELECT *FROM student;
-
+Example 2:
 CREATE TABLE temp1 (
 id INT UNIQUE
 );
@@ -143,9 +150,17 @@ INSERT INTO temp1 VALUES(101);
 INSERT INTO temp1 VALUES(101);
 
 SELECT *FROM temp1;
+
+Example 3:
+CREATE TABLE student(
+rollno INT PRIMARY KEY,
+name VARCHAR(50)
+);
+
+SELECT *FROM student;
 --------------------------------------------------------
 
-Example 2:
+Example 4:
 CREATE TABLE temp1 (
 id INT,
 name VARCHAR(50),
@@ -198,6 +213,20 @@ CHECK: It can limit the values allowed in a column
 17. CREATE TABLE newTab (
     age INT CHECK (age >= 18)
     );
+
+
+SELECT: Used to select any data from the database
+18. SELECT col1, col2 FROM table_name;
+
+WHERE clause: To define some conditions
+19. SELECT col1, col2 FROM table_name
+    WHERE conditions;
+
+Using Operators in WHERE
+Arithmetic Operators: +(addition), -(subtraction), *(multiplication), /(division), %(modulus)
+Comparison Operators: =(equal to), !=(not equal to), >, >=, <, <=
+Logical Operators: AND, OR, NOT, IN, BETWEEN, ALL, LIKE, ANY
+Bitwise Operators: &(Bitwise AND), |(Bitwise OR)
 ---------------------------------------------------------------------------------------------------
 
 CREATE DATABASE college;
@@ -220,11 +249,6 @@ VALUES
 (104, "Dhruv", 96, "A", "Delhi"),
 (105, "Emanuel", 12, "F", "Delhi"),
 (106, "Farah", 82, "B", "Delhi");
-------------------------------------------------------------------------------------------------
-
-SELECT: Used to select any data from the database
-18. SELECT col1, col2 FROM table_name;
--------------------------------------------------------------------------------------------------
 
 SELECT name, marks FROM student;
 
@@ -233,17 +257,6 @@ SELECT *FROM student;
 SELECT city FROM student;
 
 SELECT DISTINCT city FROM student;
---------------------------------------------------------------------------------------------
-
-WHERE clause: To define some conditions
-19. SELECT col1, col2 FROM table_name
-    WHERE conditions;
-
-Using Operators in WHERE
-Arithmetic Operators: +(addition), -(subtraction), *(multiplication), /(division), %(modulus)
-Comparison Operators: =(equal to), !=(not equal to), >, >=, <, <=
-Logical Operators: AND, OR, NOT, IN, BETWEEN, ALL, LIKE, ANY
-Bitwise Operators: &(Bitwise AND), |(Bitwise OR)
 
 20. SELECT *FROM student WHERE marks = 93;
 
@@ -251,9 +264,10 @@ Bitwise Operators: &(Bitwise AND), |(Bitwise OR)
 
 22. SELECT *FROM student WHERE city = "Mumbai";
 
+-----------------------------------------------------------------------------------------------------
 AND (to check for both conditions to be true)
 23. SELECT *FROM student
-    WHERE marks > 80 AND city = "Mumbai";
+    WHERE marks + 10 > 80 AND city = "Mumbai";
 
 OR (to check for one of the conditions to be true)
 24. SELECT *FROM student
@@ -308,11 +322,12 @@ Group By Cluase: Groups rows that have the same values into summary rows.
 
 Generally we use group by with some aggregate function.
 
-To count the number of students in each city
+// To count the number of students in each city
 35. SELECT city, COUNT(name)
     FROM student
     GROUP BY city;
 
+// To find average marks of each city in ascending order.
 Example 1: SELECT city, AVG(marks)
            FROM student
            GROUP BY city
@@ -323,11 +338,17 @@ Example 2: SELECT city, AVG(marks)
            GROUP BY city
            ORDER BY avg(marks) DESC;
 
+// To count the number of students that scored a particular grade
+SELECT grade, COUNT(rollno)
+FROM student
+GROUP BY grade
+ORDER BY grade;
+
 HAVING CLAUSE: Similar to WHERE i.e. applies some condition on rows.
                 Used when we want to apply any condition after grouping.
 
-Count number of students in each city where max marks cross 90.
-36. SELECT COUNT(name), city
+// Count number of students in each city where max marks cross 90.
+36. SELECT city, COUNT(rollno)
     FROM student
     GROUP BY city
     HAVING MAX(marks) > 90;
@@ -343,16 +364,11 @@ General Order: SELECT column(s)
                HAVING condition
                ORDER BY column(s) ASC;
 
-Example 1: SELECT city, COUNT(rollno)
+Example: SELECT city
            FROM student
+           WHERE grade = "A"   // condition of grade is checked for each row (tuple)
            GROUP BY city
-           HAVING MAX(marks) > 90;
-
-Example 2: SELECT city
-           FROM student
-           WHERE grade = "A"
-           GROUP BY city
-           HAVING MAX(marks) > 90
+           HAVING MAX(marks) > 90    // Having condition checks for group only.
            ORDER BY ASC;
 
 UPDATE: to update existing rows
@@ -362,13 +378,21 @@ WHERE condition;
 
 UPDATE student
 SET grade = "B"
-WHERE marks > 80;
+WHERE marks BETWEEN 80 AND 90;
 
-38. SET SQL_SAFE_UPDATES = 0;
+Example
+UPDATE student
+SET marks = marks+1;
+
+// Safe mode is to prevent unnecessary changes in the database
+38. SET SQL_SAFE_UPDATES = 0;        // Off safe mode
 
 DELETE: to delete existing rows
 39. DELETE FROM table_name
     WHERE condition;
+
+// To delete the entire table rows
+DELETE FROM table_name;
 
 DELETE FROM student
 WHERE marks < 33;
@@ -395,7 +419,7 @@ On Update Cascade: When we create a foreign key using UPDATE CASCADE the referen
                     the referenced row is updated in the parent table which has a primary key.
  ------------------------------------------------------------------------------------------
 
-40. CREATE TABLE student (
+40. CREATE TABLE teacher (
     id INT PRIMARY KEY,
     courseID INT,
     FOREIGN KEY(courseID) REFERENCES course(id)
@@ -415,7 +439,7 @@ SET id = 103
 WHERE id = 102;
 ---------------------------------------------------------------------------------------------
 
-ALTER: to change the schema
+ALTER: to change the schema -> (columns, datatype, constraints)
 
 ADD Column
 41. ALTER TABLE table_name
@@ -442,7 +466,7 @@ RENAME Table
     RENAME TO new_table_name;
 
 Example: ALTER TABLE student
-         MODIFY age VARCHAR(2);
+         RENAME to stu;
 
 CHANGE Column (rename)
 44. ALTER TABLE table_name
@@ -458,16 +482,12 @@ MODIFY Column (modify datatype/ constraint)
 Example: ALTER TABLE student
          MODIFY age VARCHAR(2);
 -----------------------------------------------------------------------------------------
-
-ALTER TABLE student
-MODIFY COLUMN age VARCHAR(2);
-
 INSERT INTO student
 (rollno, name, marks, age)
 VALUES
 (107, "gargi", 68, 100);
 --------------------------------------------------------------------------------------------
-
+DROP: to delete the table
 Truncate: to delete table's data
 46. TRUNCATE TABLE table_name;
 
